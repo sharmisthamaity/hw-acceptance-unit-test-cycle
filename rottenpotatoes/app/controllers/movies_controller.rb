@@ -46,6 +46,17 @@ class MoviesController < ApplicationController
   def edit
     @movie = Movie.find params[:id]
   end
+  
+  def showsame
+    directorName = Movie.find(params[:id]).director
+
+    @same_director_movies = []
+    for m in Movie.all do
+      if (m.director == directorName)
+        @same_director_movies.push(m)
+      end
+    end
+  end
 
   def update
     @movie = Movie.find params[:id]
