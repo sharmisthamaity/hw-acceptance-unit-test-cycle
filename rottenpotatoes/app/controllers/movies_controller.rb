@@ -49,13 +49,15 @@ class MoviesController < ApplicationController
   
   def showsame
     directorName = Movie.find(params[:id]).director
-
-    @same_director_movies = []
-    for m in Movie.all do
-      if (m.director == directorName)
-        @same_director_movies.push(m)
-      end
+    
+    if(directorName == "")
+      redirect_to root_path, alert: "'#{Movie.find(params[:id]).title}' has no director info"
+    elsif (directorName.nil?)
+      redirect_to root_path, alert: "'#{Movie.find(params[:id]).title}' has no director info"
     end
+
+    @same_director_movies = Movie.same_director_movies(directorName)
+  
   end
 
   def update
