@@ -28,3 +28,19 @@ Then /^the director of "(.*)" should be "(.*)"/ do |movie_title, director_name|
   visit movie_path(Movie.find_by(title: movie_title))
   page.text.should match(/Director:\s#{director_name}/)
 end
+
+Then /^the rating of "(.*)" should be "(.*)"/ do |movie_title, rating|
+  visit movie_path(Movie.find_by(title: movie_title))
+  page.text.should match(/Rating:\s#{rating}/)
+end
+
+When /^(?:|I )select datetime "([^ ]*) ([^ ]*) ([^ ]*)" from "([^"]*)"$/ do |year, month, day, field|
+  select(year,   :from => "#{field}_1i")
+  select(month,  :from => "#{field}_2i")
+  select(day,    :from => "#{field}_3i")
+end
+
+Then /^the release date of "(.*)" should be "(.*)"/ do |movie_title, date|
+  visit movie_path(Movie.find_by(title: movie_title))
+  page.text.should match(/#{date}/)
+end
